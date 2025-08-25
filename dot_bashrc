@@ -1,0 +1,146 @@
+export TERM=xterm-256color
+export LANG=en_US.UTF-8
+export LC_ALL="en_US.UTF-8"
+
+# PATH
+PATH=$HOME/.local/bin:$PATH
+PERL5LIB="$HOME/.perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
+PERL_LOCAL_LIB_ROOT="$HOME/.perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
+
+# history.
+HISTFILE="$HOME/.bash_history"
+HISTSIZE=3000
+HISTTIMEFORMAT="%F %T"
+HISTCONTROL=erasedups:ignorespace:ignoredups
+PROMPT_COMMAND="history -a; history -c; history -r"
+shopt -s histappend
+shopt -s cmdhist # Store multi-line commands as one entry
+shopt -s lithist # Preserve newlines in history
+
+# Aliases
+source ~/.bash_aliases
+
+# GIT prompt.
+source "$HOME/.bash_files/git-prompt.sh"
+# PS1='\e[01;32m\u:\e[01;34m\w\e[0m\$ '
+PS1='\[\033[37m\][\u@\h \[\033[36m\]\w\[\033[37m\]]\[\033[0m\]$(__git_ps1 " (%s)")\$ '
+
+# GIT prompt options
+GIT_PS1_SHOWCOLORHINTS=yes
+GIT_PS1_SHOWDIRTYSTATE=yes
+GIT_PS1_SHOWSTASHSTATE=yes
+GIT_PS1_SHOWUNTRACKEDFILES=yes
+GIT_PS1_SHOWUPSTREAM="auto"
+
+# Editor
+export EDITOR=/usr/local/bin/vim
+
+# XDG.
+export XDG_RUNTIME_DIR='/tmp'
+export XDG_CACHE_HOME=$HOME/.cache
+# export XDG_STATE_DIR="$HOME/.local/state"
+
+# autocompletion.
+source "$HOME/.bash_files/git-completion.bash"
+source "$HOME/.bash_files/pass-completion.bash"
+
+# fzf.
+export FZF_DEFAULT_OPTS="\
+    --no-sort \
+    --exact \
+    --border=double \
+    --height '30%' \
+    --pointer='>>' \
+    --layout=reverse"
+export FZF_CTRL_R_OPTS="--info=inline \
+    --layout=reverse \
+    --scheme='history' \
+    --border-label='HISTORY'"
+export TMUX_FZF_OPTIONS="--height 40%--border -p -w 62% -h 38% -m"
+
+source "$HOME/.local/share/fzf/bash/key-bindings.bash"
+source "$HOME/.local/share/fzf/bash/completion.bash"
+
+# NNN
+source "$HOME/.config/nnn/quitcd.bash"
+source "$HOME/.config/nnn/exports"
+
+# virtual machines.
+startvm() {
+	echo "Running vitrual machine"
+	sleep 2
+	if [ $# -eq 0 ]; then
+		vmctl start 1
+		vmctl console 1
+	else
+		vmctl start "$1"
+		vmctl console "$1"
+	fi
+}
+
+# mkdir and cd.
+mkcd() {
+	if [ $# -eq 0 ]; then
+		echo "Usage: mkcd <directory_name>"
+	else
+		mkdir -p "$1" && cd "$1" || exit
+	fi
+}
+
+# download music from youtube.
+dl_music() {
+	MUSDIR="$HOME/Music"
+	if [ $# == 1 ]; then
+		cd "$MUSDIR" || return 15
+		yt-dlp -f 'ba' -x --audio-format mp3 "$1" -o '%(title)s.%(ext)s'
+		cd "$OLDPWD" || exit
+	else
+		echo 'Bad arguments'
+		return 16
+	fi
+}
+
+# Compress a directory into a .tar.gz file with the directory name
+gzipdir() {
+	# Get the directory name without the trailing slash and create the tar.gz archive
+	tar -czvf "${1%/}.tar.gz" "$1"
+}
+
+# Install some packages globally (usually ones that you use across different projects consistently).
+gpip() {
+	PIP_REQUIRE_VIRTUALENV=false pip "$@"
+}
+
+# Select python virtual environement.
+venvs() {
+	local PS3="Select virtual environment: "
+	select env in $(ls "$HOME"/.venvs); do
+		if [ -n "$env" ]; then
+			# shellcheck source=/dev/null
+			source "$HOME/.venvs/$env/bin/activate"
+		fi
+		break
+	done
+}
+
+wake_server() {
+	local mac_addr="${1:-D4:5D:64:05:9A:68}"
+	local ip_addr="${2:-192.168.1.21}"
+	local server="${3:-mathieu}"
+	if ! wol "$mac_addr"; then
+        echo "FAiled to send WOL packet!" >&2
+        return 1
+    fi
+    echo "Waiting for server respond ..."
+	if ping -q -i 5 -c 10 "$ip_addr" > /dev/null; then
+		echo "Server is up"
+		sleep 3
+		mosh $server
+	else
+		echo "Server is down!" >&2
+        return 2
+	fi
+}
+
+# Picom.
+# [ -n "$XTERM_VERSION" ] && picom-trans -o 97 -w "$WINDOWID" >/dev/null
