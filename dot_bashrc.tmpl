@@ -1,11 +1,15 @@
+{{- if eq .chezmoi.os "openbsd" }}
 export TERM=xterm-256color
 export LANG=en_US.UTF-8
 export LC_ALL="en_US.UTF-8"
+{{- end }}
 
 # PATH
 PATH=$HOME/.local/bin:$PATH
+{{- if eq .chezmoi.os "openbsd" }}
 PERL5LIB="$HOME/.perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
 PERL_LOCAL_LIB_ROOT="$HOME/.perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
+{{- end }}
 
 # history.
 HISTFILE="$HOME/.bash_history"
@@ -122,5 +126,8 @@ venvs() {
 		break
 	done
 }
+{{- if eq .chezmoi.os "openbsd" }}
 # Picom.
 # [ -n "$XTERM_VERSION" ] && picom-trans -o 97 -w "$WINDOWID" >/dev/null
+{{- end }}
+
