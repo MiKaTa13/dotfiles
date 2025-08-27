@@ -22,10 +22,12 @@ shopt -s lithist # Preserve newlines in history
 
 # Aliases
 source ~/.bash_aliases
+{{- if eq .chezmoi.os "android" }}
+PS1='\e[01;32m\u:\e[01;34m\w\e[0m\$ '
+{{- end }}
 
 # GIT prompt.
 source "$HOME/.bash_files/git-prompt.sh"
-# PS1='\e[01;32m\u:\e[01;34m\w\e[0m\$ '
 PS1='\[\033[37m\][\u@\h \[\033[36m\]\w\[\033[37m\]]\[\033[0m\]$(__git_ps1 " (%s)")\$ '
 
 # GIT prompt options
