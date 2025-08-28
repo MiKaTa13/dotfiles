@@ -45,6 +45,7 @@ export EDITOR=/usr/local/bin/vim
 {{- if eq .chezmoi.os "android" }}
 export EDITOR=vim
 {{- end }}
+{{- if eq .chezmoi.os "openbsd" }}
 # XDG.
 export XDG_RUNTIME_DIR='/tmp'
 export XDG_CACHE_HOME=$HOME/.cache
@@ -53,6 +54,7 @@ export XDG_CACHE_HOME=$HOME/.cache
 # autocompletion.
 source "$HOME/.bash_files/git-completion.bash"
 source "$HOME/.bash_files/pass-completion.bash"
+{{- end }}
 
 # fzf.
 export FZF_DEFAULT_OPTS="\
@@ -68,12 +70,14 @@ export FZF_CTRL_R_OPTS="--info=inline \
     --border-label='HISTORY'"
 export TMUX_FZF_OPTIONS="--height 40%--border -p -w 62% -h 38% -m"
 
+{{- if eq .chezmoi.os "openbsd" }}
 source "$HOME/.local/share/fzf/bash/key-bindings.bash"
 source "$HOME/.local/share/fzf/bash/completion.bash"
 
 # NNN
 source "$HOME/.config/nnn/quitcd.bash"
 source "$HOME/.config/nnn/exports"
+{{- end }}
 
 # virtual machines.
 startvm() {
