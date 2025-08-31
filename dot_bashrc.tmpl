@@ -21,6 +21,7 @@ shopt -s lithist # Preserve newlines in history
 # Aliases
 source ~/.bash_aliases
 {{- if ne .chezmoi.os "openbsd" }}
+# Prompt
 PS1='\[\033[37m\][\u@\h \[\033[36m\]\w\[\033[37m\]]\[\033[0m\]\$ '
 {{- end }}
 
