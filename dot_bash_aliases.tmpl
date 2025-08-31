@@ -1,6 +1,5 @@
 alias llama-server="~/llama.cpp/build/bin/llama-server"
 alias llama-cli="~/llama.cpp/build/bin/llama-cli"
-alias memtop='ps aux | sort -nrk 6 | head'
 alias cp='cp -v'
 alias df='df -h'
 alias du='du -h'
@@ -18,15 +17,12 @@ alias nb='newsboat'
 alias sed='gsed'
 alias l='gls --color=auto' # GNU ls from coreutils.
 alias ll='gls --color=auto -lio'
+alias memtop='ps aux | sort -nrk 6 | head'
 alias la='gls --color=auto -la'
 {{- else if eq .chezmoi.os "linux" }}
 # linux
 alias l='ls --color=auto' # GNU ls from coreutils.
 alias ll='ls --color=auto -lio'
 alias la='ls --color=auto -la'
-# Run tmux as login.
-if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-  tmux attach-session -t default || tmux new-session -s default
-fi
 {{- end }}
 

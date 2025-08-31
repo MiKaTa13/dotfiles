@@ -138,3 +138,9 @@ venvs() {
 # Picom.
 # [ -n "$XTERM_VERSION" ] && picom-trans -o 97 -w "$WINDOWID" >/dev/null
 {{- end }}
+{{- if eq .chezmoi.os "linux" }}
+# Run tmux as login.
+if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+  tmux attach-session -t default || tmux new-session -s default
+fi
+{{- end }}
