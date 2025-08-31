@@ -1,5 +1,5 @@
 # This is Git's per-user configuration file.
-{{- if ne .chezmoi.host "fox" }}
+{{- if ne .chezmoi.hostname "fox" }}
 [user]
     email = {{ .email | quote }}
 {{- end }}
