@@ -7,12 +7,6 @@ alias sed='gsed'
 alias l='gls --color=auto' # GNU ls from coreutils.
 alias ll='gls --color=auto -lio'
 alias la='gls --color=auto -la'
-{{- else if eq .chezmoi.os "linux" }}
-# linux
-alias l='ls --color=auto' # GNU ls from coreutils.
-alias ll='ls --color=auto -lio'
-alias la='ls --color=auto -la'
-{{- end }}
 alias cp='cp -v'
 alias df='df -h'
 alias du='du -h'
@@ -25,3 +19,14 @@ alias translate='xclip -o | trans :uk -no-pager' # translate clipboard selection
 alias xc="tr '\n' ' ' | xclip -selection clipboard"
 alias netinfo='netstat -an | grep -E "ESTABLISHED|LISTEN"'
 alias nb='newsboat'
+{{- else if eq .chezmoi.os "linux" }}
+# linux
+alias l='ls --color=auto' # GNU ls from coreutils.
+alias ll='ls --color=auto -lio'
+alias la='ls --color=auto -la'
+# Run tmux as login.
+if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+  tmux attach-session -t default || tmux new-session -s default
+fi
+{{- end }}
+
