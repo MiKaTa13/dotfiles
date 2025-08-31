@@ -1,12 +1,6 @@
 alias llama-server="~/llama.cpp/build/bin/llama-server"
 alias llama-cli="~/llama.cpp/build/bin/llama-cli"
 alias memtop='ps aux | sort -nrk 6 | head'
-{{- if eq .chezmoi.os "openbsd" }}
-# openbsd 
-alias sed='gsed'
-alias l='gls --color=auto' # GNU ls from coreutils.
-alias ll='gls --color=auto -lio'
-alias la='gls --color=auto -la'
 alias cp='cp -v'
 alias df='df -h'
 alias du='du -h'
@@ -19,6 +13,12 @@ alias translate='xclip -o | trans :uk -no-pager' # translate clipboard selection
 alias xc="tr '\n' ' ' | xclip -selection clipboard"
 alias netinfo='netstat -an | grep -E "ESTABLISHED|LISTEN"'
 alias nb='newsboat'
+{{- if eq .chezmoi.os "openbsd" }}
+# openbsd 
+alias sed='gsed'
+alias l='gls --color=auto' # GNU ls from coreutils.
+alias ll='gls --color=auto -lio'
+alias la='gls --color=auto -la'
 {{- else if eq .chezmoi.os "linux" }}
 # linux
 alias l='ls --color=auto' # GNU ls from coreutils.
