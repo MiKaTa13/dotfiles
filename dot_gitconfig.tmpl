@@ -1,23 +1,25 @@
 # This is Git's per-user configuration file.
+{{- if ne .chezmoi.host "fox" }}
 [user]
     email = {{ .email | quote }}
+{{- end }}
 [core]
-  editor = vim
+    editor = vim
 [alias]
-  st = status
-  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-  br = branch
-  ci = commit
-  alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
-  sw = switch
-  last = log -1 HEAD
-  co = checkout
-  hist = log --graph --oneline --all
-  graph = log --all --graph --decorate --oneline
-  purge = !git clean -df && git checkout -- .
-  wip = "!f() { git add -A && git commit -m \"WIP\"; }; f"
-  unwip = reset HEAD~1
+    st = status
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    br = branch
+    ci = commit
+    alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
+    sw = switch
+    last = log -1 HEAD
+    co = checkout
+    hist = log --graph --oneline --all
+    graph = log --all --graph --decorate --oneline
+    purge = !git clean -df && git checkout -- .
+    wip = "!f() { git add -A && git commit -m \"WIP\"; }; f"
+    unwip = reset HEAD~1
 [init]
-  defaultBranch = main
+    defaultBranch = main
 [credential]
-  helper = store
+    helper = store
