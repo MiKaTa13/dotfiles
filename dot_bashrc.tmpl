@@ -42,8 +42,8 @@ GIT_PS1_SHOWUPSTREAM="auto"
 
 # Editor
 export EDITOR=/usr/local/bin/vim
-{{- if eq .chezmoi.os "android" }}
-export EDITOR=vim
+{{- if ne .chezmoi.os "openbsd" }}
+export EDITOR=/usr/bin/vim
 {{- end }}
 {{- if eq .chezmoi.os "openbsd" }}
 # XDG.
