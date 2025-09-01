@@ -21,7 +21,6 @@ shopt -s lithist # Preserve newlines in history
 # Aliases
 source ~/.bash_aliases
 
-export TERM=xterm-256color
 # GIT prompt.
 source "$HOME/.bash_files/git-prompt.sh"
 PS1='\[\033[37m\][\u@\h \[\033[36m\]\w\[\033[37m\]]\[\033[0m\]$(__git_ps1 " (%s)")\$ '
@@ -44,9 +43,9 @@ export XDG_RUNTIME_DIR='/tmp'
 export XDG_CACHE_HOME=$HOME/.cache
 
 # autocompletion.
-source "$HOME/.bash_files/git-completion.bash"
 source "$HOME/.bash_files/pass-completion.bash"
 {{- end }}
+source "$HOME/.bash_files/git-completion.bash"
 
 # fzf.
 export FZF_DEFAULT_OPTS="\
