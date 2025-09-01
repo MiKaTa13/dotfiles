@@ -23,7 +23,7 @@ source ~/.bash_aliases
 
 {{- if ne .chezmoi.os "openbsd" }}
 # Prompt
-PS1='\[\033[37m\][\u@\h \[\033[36m\]\w\[\033[37m\]]\[\033[0m\]\$ '
+PS1='\[\033[37m\][\u@\h \[\033[36m\]\w\[\033[37m\]]\[\033[0m\]\\$ '
 {{- end }}
 
 {{- if eq .chezmoi.os "openbsd" }}
@@ -38,10 +38,10 @@ GIT_PS1_SHOWDIRTYSTATE=yes
 GIT_PS1_SHOWSTASHSTATE=yes
 GIT_PS1_SHOWUNTRACKEDFILES=yes
 GIT_PS1_SHOWUPSTREAM="auto"
-{{- end }}
-
 # Editor
 export EDITOR=/usr/local/bin/vim
+{{- end }}
+
 {{- if ne .chezmoi.os "openbsd" }}
 export EDITOR=/usr/bin/vim
 {{- end }}
