@@ -4,6 +4,7 @@
     name = MiKaTa13
     email = misha13kopta@gmail.com
 {{ else }}
+[user]
     name = NoName
     email = {{ .email | quote }}
 {{- end }}
