@@ -1,6 +1,9 @@
 # This is Git's per-user configuration file.
-{{- if ne .chezmoi.hostname "fox" }}
+{{- if eq .chezmoi.hostname "fox" }}
 [user]
+    name = MiKaTa13
+    email = misha13kopta@gmail.com
+{{ else }}
     email = {{ .email | quote }}
 {{- end }}
 [core]
