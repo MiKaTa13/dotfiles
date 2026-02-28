@@ -1,0 +1,3 @@
+#!/usr/bin/env bash 
+SCREENSHOT_DIR="$HOME/Pictures"
+magick import  $SCREENSHOT_DIR/$(date  +%j_%H%M%S)screenshot.jpg
